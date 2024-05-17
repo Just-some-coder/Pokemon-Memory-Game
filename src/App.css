@@ -1,0 +1,149 @@
+#root{
+    height: 98dvh;
+    width: 99.3dvw;
+    background-image: url("/src/assets/418495.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.Header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.Header img{
+    height: 180px;
+    width: 480px;
+}
+
+.gameArea{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gameArea img{
+    height: 120px;
+    width: 120px;
+
+    transform: rotateZ(0deg);
+    transition: ease-out 0.4s ;
+    cursor: pointer;
+
+}
+
+.gameArea img:hover{
+    transform: rotateZ(-360deg);
+    transition: ease-in 0.4s ;
+}
+
+.options{
+    display: flex;
+    justify-content: space-between;
+}
+
+.soundOptions{
+    display: flex;
+    margin: 0 1rem;
+    width: 150px;
+    justify-content: space-between;
+}
+
+.soundOptions img{
+    width: 50px;
+    height: 50px;
+}
+
+.achievements{
+    display: flex;
+    justify-content: space-around;
+    width: 700px;
+}
+
+.achievements img{
+    width: 120px;
+    height: 120px;
+}
+
+.gameplayOptions{
+    display: flex;
+    justify-content: space-between;
+    width: 150px;
+}
+
+.gameplayOptions img{
+    width: 50px;
+    height: 50px;
+}
+
+.options{
+    margin-top:7.5rem ;
+}
+
+.options button{
+    background: none;
+    border: none;
+    color: inherit;
+    font: inherit;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+}
+
+.howtoplay{
+    position: fixed;
+    width: 300px;
+    height: 400px;
+    background: rgba(255,255,255,0.8);
+    top: 100px;
+    left: 470px;
+    z-index: 1000000;
+
+    border-radius: 20px;
+}
+
+.closeButton{
+    display: flex;
+
+}
+
+.closeButton img{
+    width: 30px;
+    height: 30px;
+    margin-left: auto;
+
+    cursor: pointer;
+}
+
+.titleMark{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.titleMark img{
+    width: 30px;
+    height: 30px;
+}
+
+.situationImage{
+    display: flex;
+    justify-content: center;
+}
+
+.situationImage img{
+    width: 250px;
+    height: 150px;
+}
+
+.howtoplayDescription{
+    display: flex;
+    justify-content: center;
+}
+
+.howtoplayDescription p{
+    margin:0.5rem 1rem;
+    word-break: inherit;
+}

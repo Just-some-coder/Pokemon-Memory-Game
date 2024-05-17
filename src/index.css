@@ -1,0 +1,13 @@
+body{
+    width: 90dvw;
+    height: 90dvh;
+    background-image: url("../public/418495.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    /*height: 100%;*/
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    /*width: 1920px;*/
+    background-size: cover;
+}
