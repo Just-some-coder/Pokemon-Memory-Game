@@ -7,18 +7,21 @@
 }
 
 .Header{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    height: 300px;
+    text-align: center;
 
 }
 
 .Header img{
-    height: 180px;
-    width: 480px;
+    height: 300px;
+    width: 800px;
+    animation: pulsate 1.5s infinite;
 }
 
 .gameArea{
+    margin-top: 5rem;
+    position: fixed;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -28,18 +31,20 @@
     height: 120px;
     width: 120px;
 
-    transform: rotateZ(0deg);
-    transition: ease-out 0.4s ;
+    /*transform: rotateZ(0deg);*/
+    /*transition: ease-out 0.4s ;*/
+    animation: spin 1.5s infinite linear;
     cursor: pointer;
-
 }
 
 .gameArea img:hover{
-    transform: rotateZ(-360deg);
-    transition: ease-in 0.4s ;
+    animation-play-state:paused;
 }
 
 .options{
+    position: fixed;
+    top:650px;
+    width: 100%;
     display: flex;
     justify-content: space-between;
 }
@@ -92,19 +97,9 @@
     cursor: pointer;
 }
 
-.howtoplay{
-    position: fixed;
-    width: 300px;
-    height: 400px;
-    background: rgba(255,255,255,0.8);
-    top: 100px;
-    left: 470px;
-    z-index: 1000000;
-
-    border-radius: 20px;
-}
 
 .closeButton{
+    margin-top: 10px;
     display: flex;
 
 }
@@ -113,14 +108,21 @@
     width: 30px;
     height: 30px;
     margin-left: auto;
+    margin-right: 5px;
 
     cursor: pointer;
 }
 
 .titleMark{
-    display: flex;
-    justify-content: center;
+    position: fixed;
+    display: grid;
+    width: 200px;
+    text-align: center;
+    left:850px;
+    top:160px;
     margin-bottom: 1rem;
+    background: rgba(255,255,255,0.8);
+    border-radius: 30px;
 }
 
 .titleMark img{
@@ -134,16 +136,113 @@
 }
 
 .situationImage img{
-    width: 250px;
-    height: 150px;
+    width: 200px;
+    height: 200px;
 }
 
+.background{
+    position: fixed;
+    top:0;
+    left:0;
+    width: 101dvw;
+    height: 100dvh;
+    background: rgba(0,0,0,0.5);
+    z-index: 10;
+}
+
+.howtoplay{
+    position: fixed;
+    width: 800px;
+    height: 500px;
+    background: rgba(255,255,255,0.8);
+    top: 200px;
+    left: 540px;
+
+    z-index: 1000000;
+    border-radius: 20px;
+}
 .howtoplayDescription{
-    display: flex;
+    /*display: flex;*/
     justify-content: center;
+    text-align: center;
 }
 
 .howtoplayDescription p{
     margin:0.5rem 1rem;
     word-break: inherit;
 }
+
+.leaderboards{
+    border-radius: 30px;
+    text-align: center;
+    position: fixed;
+    top:150px;
+    left:600px;
+    width: 700px;
+    height: 600px;
+    background: rgba(255,255,255,0.7);
+    z-index: 1000000;
+}
+
+.leaderboard-table{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+table{
+    margin-top: 10px;
+    font-size: 1.3rem;
+    border: 2px solid black;
+}
+table tr{
+    border: 2px black solid;
+    /*background: #bbb;*/
+    border-radius: 30px ;
+}
+td{
+    border: 2px black solid;
+}
+.leaderboard-table table tr td{
+    justify-content: center;
+    padding: 0 3rem;
+}
+.leaderboards-title{
+    width: 400px;
+    left:750px;
+    top:100px;
+    background: rgba(255,255,255,0.9);
+}
+.leaderboards-situation img{
+    width: 200px;
+}
+
+@keyframes pulsate {
+    0% {
+        /*height: 300px;*/
+        /*width: 800px;*/
+        transform: scale(1);
+    }
+    50% {
+        /*height: 310px;*/
+        /*width: 826px;*/
+        transform: scale(1.1);
+
+    }
+    100% {
+        transform: scale(1);
+
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotateZ(0deg);
+    }
+    50% {
+        transform: rotateZ(180deg);
+    }
+    100% {
+        transform: rotateZ(360deg);
+    }
+}
+
