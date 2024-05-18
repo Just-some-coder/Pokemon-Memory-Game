@@ -58,8 +58,8 @@
 
 .soundOptions img{
     width: 50px;
-    height: 50px;
 }
+
 
 .achievements{
     display: flex;
@@ -179,8 +179,8 @@
     top:150px;
     left:600px;
     width: 700px;
-    height: 600px;
-    background: rgba(255,255,255,0.7);
+    height: 650px;
+    background: rgba(255,255,255,0.8);
     z-index: 1000000;
 }
 
@@ -232,6 +232,88 @@ td{
         transform: scale(1);
 
     }
+}
+
+.chooseDifficulty{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50%;
+}
+.difficultyButtons{
+    width: 60%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.difficultyButtons button{
+    cursor: pointer;
+    width: 300px;
+    height: 120px;
+    background: red;
+    box-shadow: whitesmoke 2px 2px 2px 2px;
+}
+
+.difficultyButtons button:hover {
+    background: #cc0000;
+}
+
+button:active{
+    cursor: inherit;
+}
+
+button:hover img{
+    opacity: 60%;
+}
+
+.deck{
+    height: 50%;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.card{
+    /*background: rgba(211,211,211,0.8);*/
+    width: 250px;
+    /*border-radius:40px;*/
+    background: rgba( 255, 255, 255, 0.2 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 10px );
+    -webkit-backdrop-filter: blur( 10px );
+    border-radius: 10px;
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
+
+    transition: 0.1s ease-in-out;
+    cursor: pointer;
+}
+
+.cardFlipped{
+
+}
+
+.card:hover{
+    transform: scale(1.1);
+    transition: ease-in-out .1s ;
+}
+
+.card img{
+    width: 250px;
+    height: 250px;
+}
+.cards{
+    height: 80%;
+    display: flex;
+    width: 1400px;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.score h3{
+    top:100px;
+    right:120px;
+    position: fixed;
+    font-size: 3rem;
 }
 
 @keyframes spin {

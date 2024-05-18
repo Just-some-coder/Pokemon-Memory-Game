@@ -1,5 +1,5 @@
 import "./App.css"
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 
 function GameButton({handlePlay}){
@@ -10,55 +10,77 @@ function GameButton({handlePlay}){
     );
 }
 
-function Footer({handleHowToPlay, handleLeaderBoard}) {
+function Footer({handleHowToPlay, handleLeaderBoard, handleClickSound, handleClickMake, clickSoundIcon, handleMusic, handleMusicMake, achievementList}) {
     return (
         <div className={"options"}>
 
             <div className={"soundOptions"}>
                 <button>
-                    <img src='/src/assets/musical-note.png'/>
+                    <img src={!handleMusicMake ? '/src/assets/musical-note.png' : "/src/assets/211871_pause_icon.png"}
+                         onClick={() => {
+                             handleClickSound();
+                             handleMusic();
+                         }}/>
                 </button>
 
                 <button>
-                    <img src="/src/assets/speaker-filled-audio-tool.png"/>
+                    <img
+                        src={clickSoundIcon ? "/src/assets/speaker-filled-audio-tool.png" : "/src/assets/9023983_speaker_simple_x_fill_icon.png"}
+                        onClick={() => {
+                            handleClickSound();
+                            handleClickMake();
+                        }}/>
                 </button>
             </div>
 
             <div className={"achievements"}>
                 <span>
-                    <img src="/src/assets/easy.png" title="Pokemon Trainer"/>
+                    <img src={achievementList[0] ? "/src/assets/easyYes.png" : "/src/assets/easyNo.png"} title="Pokemon Trainer"/>
                 </span>
+
                 <span>
-                    <img src="/src/assets/medium.png" title="Pokemon Champion"/>
+                    <img src={achievementList[1] ? "/src/assets/mediumYes.png" : "/src/assets/mediumNo.png"} title="Pokemon Champion"/>
                 </span>
+
                 <span>
-                    <img src="/src/assets/hard.png" title="Pokemon Professor"/>
+                    <img src={achievementList[2] ? "/src/assets/hardYes.png" : "/src/assets/hardNo.png"} title="Pokemon Professor"/>
                 </span>
+
                 <span>
-                    <img src="/src/assets/master.png" title="Pokemon Master"/>
+                    <img src={achievementList[3] ? "/src/assets/masterYes.png" : "/src/assets/masterNo.png"} title="Pokemon Master"/>
                 </span>
+
 
             </div>
 
             <div className={"gameplayOptions"}>
                 <button>
-                    <img src="/src/assets/5898866_competition_leaderboard_rank_ranking_icon.png" onClick={handleLeaderBoard}/>
+                    <img src="/src/assets/5898866_competition_leaderboard_rank_ranking_icon.png" onClick={() => {
+                        handleLeaderBoard();
+                        handleClickSound();
+                    }}/>
                 </button>
 
                 <button>
-                    <img src="/src/assets/9042850_question_mark_icon.png" onClick={handleHowToPlay}/>
+                    <img src="/src/assets/9042850_question_mark_icon.png" onClick={() => {
+                        handleHowToPlay();
+                        handleClickSound();
+                    }}/>
                 </button>
             </div>
         </div>
     );
 }
 
-function HowToPlay({handleHowToPlay}) {
+function HowToPlay({handleHowToPlay, handleClickSound}) {
     return (
         <div className={"background"}>
             <div className={"howtoplay"}>
                 <div className={"closeButton"}>
-                    <img src="/src/assets/9110796_x_icon.png" onClick={handleHowToPlay}/>
+                    <img src="/src/assets/9110796_x_icon.png" onClick={()=>{
+                        handleHowToPlay();
+                        handleClickSound();
+                    }}/>
                 </div>
 
                 <div className={"titleMark"}>
@@ -79,14 +101,17 @@ function HowToPlay({handleHowToPlay}) {
     );
 }
 
-function LeaderBoards({handleLeaderBoard}) {
+function LeaderBoards({handleLeaderBoard , handleClickSound}) {
     const [leaderboard, setLeaderboard] = useState([["Red", 10], ["Ash", 8], ["Misty", 6], ["Brock", 9]]);
 
     return (
         <div className={"background"}>
             <div className={"leaderboards"}>
                 <div className={"closeButton"}>
-                    <img src="/src/assets/9110796_x_icon.png" onClick={handleLeaderBoard}/>
+                    <img src="/src/assets/9110796_x_icon.png" onClick={()=>{
+                        handleLeaderBoard();
+                        handleClickSound();
+                    }}/>
                 </div>
                 <div className={"titleMark leaderboards-title"}>
                     <h1>LEADERBOARDS</h1>
@@ -130,7 +155,95 @@ function LeaderBoards({handleLeaderBoard}) {
     );
 }
 
-export default function Game() {
+function ChooseDifficulty({handleDifficulty}){
+    return(
+        <div className={"chooseDifficulty"}>
+            <div className={"difficultyButtons"}>
+                <button onClick={()=>{
+                    handleDifficulty(2);
+                }}><h1>Easy</h1></button>
+                <button onClick={()=>{
+                    handleDifficulty(3);
+                }}><h1>Medium</h1></button>
+                <button onClick={()=>{
+                    handleDifficulty(4);
+                }}><h1>Hard</h1></button>
+            </div>
+        </div>
+    );
+}
+
+function Card({pokeID , onClick}){
+
+    const [cardData, setCardData] = useState({
+        name:"Bulbadaur",
+        sprites:{
+            other:{
+                "official-artwork":{
+                    front_default:"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/132.png"
+                }
+            }
+        }
+    })
+
+    const [api, setApi] = useState("https://pokeapi.co/api/v2/pokemon/" + pokeID)
+
+
+
+    useEffect(()=>{
+        fetch(api)
+            .then((data)=>{
+                return data.json()
+            })
+            .then((data)=>{
+                setCardData(data);
+            })
+    },[pokeID,api])
+
+    return(
+        <div className={"card"} onClick={()=>{
+            onClick(pokeID);
+        }}>
+            <img src={cardData.sprites.other["official-artwork"].front_default}/>
+            <h2>{cardData.name.toUpperCase()}</h2>
+        </div>
+    );
+}
+
+function Game({difficulty}) {
+
+    const [onDeck, setOnDeck] = useState(Array.from({length: 151}, (_, i) => i + 1).sort(() => 0.5 - Math.random()).slice(0, 5));
+
+    const [choosen, setChoosen] = useState([]);
+
+    const [onHand, setOnHand] = useState([...onDeck].sort(() => Math.random() - 0.5));
+
+    const handleCardSelect = (id) =>{
+
+        if(choosen.includes(id)){
+            setChoosen([]);
+        }else{
+            setChoosen([...choosen,id]);
+        }
+
+        setOnHand([...onHand].sort(() => Math.random() - 0.5))
+    }
+
+    return (
+        <div className="deck">
+            <div className={"score"}><h3>Score: {choosen.length}/{5}</h3></div>
+            <div className={"cards"}>
+                {onHand.map((card)=>{
+                    return(
+                        <Card pokeID={card} key={card} onClick = {handleCardSelect}/>
+                    );
+                })}
+            </div>
+        </div>
+    );
+}
+
+export default function HomePage() {
 
     const [gameState, setGameState] = useState(0);
 
@@ -152,6 +265,16 @@ export default function Game() {
                     <GameButton handlePlay={handlePlay}/>
                 </>
             );
+        }else if(gameState === 1){
+            return (
+                <>
+                    <ChooseDifficulty handleDifficulty = {handleDifficultyChoose}/>
+                </>
+            );
+        }else if([2,3,4].includes(gameState)){
+            return(
+                <Game difficulty = {gameState}/>
+            );
         }
     }
 
@@ -159,21 +282,73 @@ export default function Game() {
         setGameState(1);
     }
 
+    const [playClickSound, setClickSound] = useState(true);
+    const [playMusic, setPlayMusic] = useState(true);
 
+
+    const handleClickSound = () =>{
+        const audio = new Audio("/src/assets/pokemon-a-button.mp3");
+        if(playClickSound) {
+            setTimeout(() => {
+                audio.play();
+            }, 0);
+            setTimeout(() => {
+                audio.pause();
+            }, 1000)
+        }
+    }
+
+    const [musicAudio,setMusicAudio] = useState(new  Audio("/src/assets/backgroundMusic.mp3"));
+
+    const handleMusic = () =>{
+
+        if(playMusic) {
+            musicAudio.play();
+        }else{
+            musicAudio.pause();
+        }
+
+        setPlayMusic(!playMusic);
+
+
+    }
+
+    const handleClickMake = () =>{
+        setClickSound(!playClickSound);
+    }
+
+    const [achievementList, setAchievementList] = useState([0,0,0,0]);
+
+    const gainAchievement = (num) =>{
+        let temp = [...achievementList];
+        temp[num] = 1;
+        setAchievementList(temp);
+    }
+
+    const handleDifficultyChoose = (num) =>{
+        if(num===1){
+            setGameState(2);
+        }else if(num===2){
+            setGameState(3);
+        }else if(num === 3){
+            setGameState(4);
+        }
+    }
 
     return (
         <>
+            {/*<audio id={"clickSound"} src="/src/assets/pokemon-a-button.mp3"></audio>*/}
             <div className={"Header"}>
                 <img src={"/src/assets/pokemon_Title.png"}/>
             </div>
 
-            { howToPlayState && <HowToPlay handleHowToPlay={handleHowToPlay}/>}
+            { howToPlayState && <HowToPlay handleHowToPlay={handleHowToPlay} handleClickSound={handleClickSound}/>}
 
-            { leaderBoardState && <LeaderBoards handleLeaderBoard={handleLeaderBoard}/>}
+            { leaderBoardState && <LeaderBoards handleLeaderBoard={handleLeaderBoard} handleClickSound={handleClickSound}/>}
 
             {handleGameState()}
 
-            <Footer handleHowToPlay={handleHowToPlay} handleLeaderBoard={handleLeaderBoard}/>
+            <Footer handleMusicMake = {playMusic} handleMusic={handleMusic} handleHowToPlay={handleHowToPlay} handleLeaderBoard={handleLeaderBoard} handleClickSound={handleClickSound} handleClickMake={handleClickMake} clickSoundIcon={playClickSound} achievementList = {achievementList}/>
 
         </>
     )
