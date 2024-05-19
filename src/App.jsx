@@ -5,7 +5,7 @@ import {useDebugValue, useEffect, useState} from "react";
 function GameButton({handlePlay, handleClickSound}){
     return (
         <div className={"gameArea"} onClick={handlePlay}>
-            <img src="./assets/playButton.png" onClick={handleClickSound}/>
+            <img src="/public/playButton.png" onClick={handleClickSound}/>
         </div>
     );
 }
@@ -16,7 +16,7 @@ function Footer({handleHowToPlay, handleLeaderBoard, handleClickSound, handleCli
 
             <div className={"soundOptions"}>
                 <button>
-                    <img src={!handleMusicMake ? '/src/assets/musical-note.png' : "/src/assets/211871_pause_icon.png"}
+                    <img src={!handleMusicMake ? '/public/musical-note.png' : "/public/211871_pause_icon.png"}
                          onClick={() => {
                              handleClickSound();
                              handleMusic();
@@ -25,7 +25,7 @@ function Footer({handleHowToPlay, handleLeaderBoard, handleClickSound, handleCli
 
                 <button>
                     <img
-                        src={clickSoundIcon ? "/src/assets/speaker-filled-audio-tool.png" : "/src/assets/9023983_speaker_simple_x_fill_icon.png"}
+                        src={clickSoundIcon ? "/public/speaker-filled-audio-tool.png" : "/public/9023983_speaker_simple_x_fill_icon.png"}
                         onClick={() => {
                             handleClickSound();
                             handleClickMake();
@@ -35,19 +35,19 @@ function Footer({handleHowToPlay, handleLeaderBoard, handleClickSound, handleCli
 
             <div className={"achievements"}>
                 <span>
-                    <img src={achievementList[0] ? "/src/assets/easyYes.png" : "/src/assets/easyNo.png"} title="Pokemon Trainer"/>
+                    <img src={achievementList[0] ? "/public/easyYes.png" : "/public/easyNo.png"} title="Pokemon Trainer"/>
                 </span>
 
                 <span>
-                    <img src={achievementList[1] ? "/src/assets/mediumYes.png" : "/src/assets/mediumNo.png"} title="Pokemon Champion"/>
+                    <img src={achievementList[1] ? "/public/mediumYes.png" : "/public/mediumNo.png"} title="Pokemon Champion"/>
                 </span>
 
                 <span>
-                    <img src={achievementList[2] ? "/src/assets/hardYes.png" : "/src/assets/hardNo.png"} title="Pokemon Professor"/>
+                    <img src={achievementList[2] ? "/public/hardYes.png" : "/public/hardNo.png"} title="Pokemon Professor"/>
                 </span>
 
                 <span>
-                    <img src={achievementList[3] ? "/src/assets/masterYes.png" : "/src/assets/masterNo.png"} title="Pokemon Master"/>
+                    <img src={achievementList[3] ? "/public/masterYes.png" : "/public/masterNo.png"} title="Pokemon Master"/>
                 </span>
 
 
@@ -55,14 +55,14 @@ function Footer({handleHowToPlay, handleLeaderBoard, handleClickSound, handleCli
 
             <div className={"gameplayOptions"}>
                 <button>
-                    <img src="/src/assets/5898866_competition_leaderboard_rank_ranking_icon.png" onClick={() => {
+                    <img src="/public/5898866_competition_leaderboard_rank_ranking_icon.png" onClick={() => {
                         handleLeaderBoard();
                         handleClickSound();
                     }}/>
                 </button>
 
                 <button>
-                    <img src="/src/assets/question-sign.png" onClick={() => {
+                    <img src="/public/question-sign.png" onClick={() => {
                         handleHowToPlay();
                         handleClickSound();
                     }}/>
@@ -77,19 +77,19 @@ function HowToPlay({handleHowToPlay, handleClickSound}) {
         <div className={"background"}>
             <div className={"howtoplay"}>
                 <div className={"closeButton"}>
-                    <img src="/src/assets/9110796_x_icon.png" onClick={()=>{
+                    <img src="/public/9110796_x_icon.png" onClick={()=>{
                         handleHowToPlay();
                         handleClickSound();
                     }}/>
                 </div>
 
                 <div className={"titleMark"}>
-                    {/*<img src="/src/assets/question-sign.png"/>*/}
+                    {/*<img src="/public/question-sign.png"/>*/}
                     <h1>How To Play</h1>
                 </div>
 
                 <div className={"situationImage"}>
-                    <img src="/src/assets/pikachu-thinking.png"/>
+                    <img src="/public/pikachu-thinking.png"/>
                 </div>
 
                 <div className={"howtoplayDescription"}>
@@ -107,7 +107,7 @@ function LeaderBoards({handleLeaderBoard , handleClickSound, leaderboard}) {
         <div className={"background"}>
             <div className={"leaderboards"}>
                 <div className={"closeButton"}>
-                    <img src="/src/assets/9110796_x_icon.png" onClick={()=>{
+                    <img src="/public/9110796_x_icon.png" onClick={()=>{
                         handleLeaderBoard();
                         handleClickSound();
                     }}/>
@@ -117,7 +117,7 @@ function LeaderBoards({handleLeaderBoard , handleClickSound, leaderboard}) {
                 </div>
 
                 <div className={"situationImage leaderboards-situation"}>
-                    <img src="/src/assets/Angry-Pikachu-PNG-Image.png"/>
+                    <img src="/public/Angry-Pikachu-PNG-Image.png"/>
                 </div>
 
                 <div className="leaderboard-table">
@@ -182,7 +182,7 @@ function Card({pokeID , onClick, handleClickSound, flipCard , cardFlip, scoreCha
         sprites:{
             other:{
                 "official-artwork":{
-                    front_default:"/src/assets/playButton.png"
+                    front_default:"/public/playButton.png"
                 }
             }
         }
@@ -217,7 +217,7 @@ function Card({pokeID , onClick, handleClickSound, flipCard , cardFlip, scoreCha
             </div>
 
             <div className={"card-back"}>
-                <img src={"/src/assets/card-back.png"} style={cardFlip?{height:"350px"}:{display:"none"}}/>
+                <img src={"/public/card-back.png"} style={cardFlip?{height:"350px"}:{display:"none"}}/>
             </div>
         </div>
     );
@@ -228,7 +228,7 @@ function GameWin(){
         <div className={"background"}>
             <div className={"gameWin"}>
                 <h1>YOU WIN !!</h1>
-                <img src="/src/assets/pikachu-happy.gif"/>
+                <img src="/public/pikachu-happy.gif"/>
             </div>
         </div>
     );
@@ -239,7 +239,7 @@ function GameLose(){
         <div className={"background"}>
             <div className={"gameLose"}>
                 <h1>Wrong Choice</h1>
-                <img src="/src/assets/wrong-pikachu.gif"/>
+                <img src="/public/wrong-pikachu.gif"/>
             </div>
         </div>
     );
@@ -258,7 +258,7 @@ function GameOver({score, handleAddToLeaderBoard,goBack}) {
         <div className={"background"}>
             <div className={"gameWin"}>
                 <h1>Game Over</h1>
-                <img src="/src/assets/nodding-crossed-arms.gif" id="gameOver"/>
+                <img src="/public/nodding-crossed-arms.gif" id="gameOver"/>
 
                 <div className={"info"}>
                     <input name={"name"} value={playerName} placeholder={"Name"} onChange={handleNameChange}/>
@@ -348,7 +348,7 @@ function Game({difficulty ,goBack , giveAchievement, handleClickSound, handleAdd
             {gameWin && <GameWin/>}
             {gameLose && <GameLose/>}
             {gameOver && <GameOver score={score} handleAddToLeaderBoard={handleAddScore} goBack={goBack}/>}
-            <div className={"score"}><h3><img src="/src/assets/playButton.png"/> SCORE : {choosen.length}/{deckSize} </h3></div>
+            <div className={"score"}><h3><img src="/public/playButton.png"/> SCORE : {choosen.length}/{deckSize} </h3></div>
             <div className={"cards"}>
                 {onHand.slice(0,5).map((card)=>{
                     return(
@@ -404,7 +404,7 @@ export default function HomePage() {
 
 
     const handleClickSound = () => {
-        const audio = new Audio("/src/assets/pokemon-a-button.mp3");
+        const audio = new Audio("/public/pokemon-a-button.mp3");
         if (playClickSound) {
             setTimeout(() => {
                 audio.play();
@@ -412,7 +412,7 @@ export default function HomePage() {
         }
     }
 
-    const [musicAudio,setMusicAudio] = useState(new  Audio("/src/assets/backgroundMusic.mp3"));
+    const [musicAudio,setMusicAudio] = useState(new  Audio("/public/backgroundMusic.mp3"));
 
     const handleMusic = () =>{
 
@@ -481,9 +481,9 @@ export default function HomePage() {
 
     return (
         <>
-            {/*<audio id={"clickSound"} src="/src/assets/pokemon-a-button.mp3"></audio>*/}
+            {/*<audio id={"clickSound"} src="/public/pokemon-a-button.mp3"></audio>*/}
             <div className={"Header"}>
-                <img src={"/src/assets/pokemon_Title.png"} onClick={()=>{
+                <img src={"/public/pokemon_Title.png"} onClick={()=>{
                     if([0,1].includes(gameState)){
                         setGameState(0);
                     }else if([2,3,4].includes(gameState)){
