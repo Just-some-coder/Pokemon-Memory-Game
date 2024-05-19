@@ -2,10 +2,10 @@ import "./App.css"
 import {useEffect, useState} from "react";
 
 
-function GameButton({handlePlay}){
+function GameButton({handlePlay, handleClickSound}){
     return (
         <div className={"gameArea"} onClick={handlePlay}>
-            <img src="/src/assets/playButton.png"/>
+            <img src="/src/assets/playButton.png" onClick={handleClickSound}/>
         </div>
     );
 }
@@ -155,32 +155,35 @@ function LeaderBoards({handleLeaderBoard , handleClickSound}) {
     );
 }
 
-function ChooseDifficulty({handleDifficulty}){
+function ChooseDifficulty({handleDifficulty ,handleClickSound}){
     return(
         <div className={"chooseDifficulty"}>
             <div className={"difficultyButtons"}>
                 <button onClick={()=>{
-                    handleDifficulty(2);
+                    handleDifficulty(2)
+                    handleClickSound();
                 }}><h1>Easy</h1></button>
                 <button onClick={()=>{
-                    handleDifficulty(3);
+                    handleDifficulty(3)
+                    handleClickSound();
                 }}><h1>Medium</h1></button>
                 <button onClick={()=>{
-                    handleDifficulty(4);
+                    handleDifficulty(4)
+                    handleClickSound();
                 }}><h1>Hard</h1></button>
             </div>
         </div>
     );
 }
 
-function Card({pokeID , onClick}){
+function Card({pokeID , onClick, handleClickSound, flipCard , cardFlip}){
 
     const [cardData, setCardData] = useState({
-        name:"Bulbadaur",
+        name:"Loading....",
         sprites:{
             other:{
                 "official-artwork":{
-                    front_default:"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/132.png"
+                    front_default:"/src/assets/playButton.png"
                 }
             }
         }
@@ -200,17 +203,49 @@ function Card({pokeID , onClick}){
             })
     },[pokeID,api])
 
+
+
     return(
-        <div className={"card"} onClick={()=>{
-            onClick(pokeID);
+        <div className={`card ${cardFlip?"flipped":""}`} onClick={()=>{
+            onClick(pokeID)
+            handleClickSound();
+            flipCard();
         }}>
-            <img src={cardData.sprites.other["official-artwork"].front_default}/>
-            <h2>{cardData.name.toUpperCase()}</h2>
+            <div className={cardFlip?"none":"card-front"}>
+                <img src={cardData.sprites.other["official-artwork"].front_default}/>
+                <h2>{cardData.name.toUpperCase()}</h2>
+            </div>
+
+            <div className={"card-back"}>
+                <img src={"/src/assets/card-back.png"} style={cardFlip?{height:"350px"}:{display:"none"}}/>
+            </div>
         </div>
     );
 }
 
-function Game({difficulty}) {
+function GameWin(){
+    return(
+        <div className={"background"}>
+            <div className={"gameWin"}>
+                <h1>YOU WIN !!</h1>
+                <img src="/src/assets/pikachu-happy.gif"/>
+            </div>
+        </div>
+    );
+}
+
+function GameLose(){
+    return(
+        <div className={"background"}>
+            <div className={"gameLose"}>
+                <h1>Wrong Choice</h1>
+                <img src="/src/assets/wrong-pikachu.gif"/>
+            </div>
+        </div>
+    );
+}
+
+function Game({difficulty ,goBack , giveAchievement, handleClickSound}) {
 
     const [onDeck, setOnDeck] = useState(Array.from({length: 151}, (_, i) => i + 1).sort(() => 0.5 - Math.random()).slice(0, 5));
 
@@ -218,24 +253,54 @@ function Game({difficulty}) {
 
     const [onHand, setOnHand] = useState([...onDeck].sort(() => Math.random() - 0.5));
 
+    const [gameWin, setGameWin] = useState(false);
+
+    const [gameLose, setGameLose] = useState(false);
     const handleCardSelect = (id) =>{
 
+
         if(choosen.includes(id)){
+            setGameLose(true);
+            setTimeout(()=>{
+                setGameLose(false);
+            },1500)
             setChoosen([]);
         }else{
             setChoosen([...choosen,id]);
+            if(choosen.length + 1 === 5){
+                setGameWin(true);
+                setTimeout(()=>{
+                    setGameWin(false);
+                    goBack(0);
+                    giveAchievement(difficulty-2);
+                },2000)
+            }
         }
+        let temp = [...onHand].sort(() => Math.random() - 0.5);
+        while(temp===onHand){
+           temp = [...onHand].sort(() => Math.random() - 0.5);
+        }
+        setOnHand(temp);
+    }
 
-        setOnHand([...onHand].sort(() => Math.random() - 0.5))
+    const [cardFlipped, setCardFlipped] = useState(false);
+
+    const flipCard = () =>{
+        setCardFlipped(!cardFlipped);
+        setTimeout(()=>{
+            setCardFlipped(false);
+        },1000)
     }
 
     return (
         <div className="deck">
-            <div className={"score"}><h3>Score: {choosen.length}/{5}</h3></div>
+            {gameWin && <GameWin/>}
+            {gameLose && <GameLose/>}
+            <div className={"score"}><h3><img src="/src/assets/playButton.png"/> SCORE : {choosen.length}/{5} </h3></div>
             <div className={"cards"}>
                 {onHand.map((card)=>{
                     return(
-                        <Card pokeID={card} key={card} onClick = {handleCardSelect}/>
+                        <Card pokeID={card} key={card} onClick = {handleCardSelect} handleClickSound={handleClickSound} flipCard={flipCard} cardFlip={cardFlipped}/>
                     );
                 })}
             </div>
@@ -262,18 +327,18 @@ export default function HomePage() {
         if (gameState === 0) {
             return (
                 <>
-                    <GameButton handlePlay={handlePlay}/>
+                    <GameButton handlePlay={handlePlay} handleClickSound={handleClickSound}/>
                 </>
             );
         }else if(gameState === 1){
             return (
                 <>
-                    <ChooseDifficulty handleDifficulty = {handleDifficultyChoose}/>
+                    <ChooseDifficulty handleDifficulty = {handleDifficultyChoose} handleClickSound={handleClickSound}/>
                 </>
             );
         }else if([2,3,4].includes(gameState)){
             return(
-                <Game difficulty = {gameState}/>
+                <Game difficulty = {gameState} goBack = {setGameState} giveAchievement={gainAchievement} handleClickSound={handleClickSound}/>
             );
         }
     }
@@ -286,15 +351,12 @@ export default function HomePage() {
     const [playMusic, setPlayMusic] = useState(true);
 
 
-    const handleClickSound = () =>{
+    const handleClickSound = () => {
         const audio = new Audio("/src/assets/pokemon-a-button.mp3");
-        if(playClickSound) {
+        if (playClickSound) {
             setTimeout(() => {
                 audio.play();
-            }, 0);
-            setTimeout(() => {
-                audio.pause();
-            }, 1000)
+            })
         }
     }
 
@@ -322,15 +384,18 @@ export default function HomePage() {
     const gainAchievement = (num) =>{
         let temp = [...achievementList];
         temp[num] = 1;
+        if(temp[0] === 1 && temp[1] === 1 && temp[2] === 1){
+            temp[3] = 1;
+        }
         setAchievementList(temp);
     }
 
     const handleDifficultyChoose = (num) =>{
-        if(num===1){
+        if(num===2){
             setGameState(2);
-        }else if(num===2){
+        }else if(num===3){
             setGameState(3);
-        }else if(num === 3){
+        }else if(num === 4){
             setGameState(4);
         }
     }
@@ -339,7 +404,14 @@ export default function HomePage() {
         <>
             {/*<audio id={"clickSound"} src="/src/assets/pokemon-a-button.mp3"></audio>*/}
             <div className={"Header"}>
-                <img src={"/src/assets/pokemon_Title.png"}/>
+                <img src={"/src/assets/pokemon_Title.png"} onClick={()=>{
+                    if([0,1].includes(gameState)){
+                        setGameState(0);
+                    }else if([2,3,4].includes(gameState)){
+                        setGameState(1);
+                    }
+                    handleClickSound();
+                }}/>
             </div>
 
             { howToPlayState && <HowToPlay handleHowToPlay={handleHowToPlay} handleClickSound={handleClickSound}/>}

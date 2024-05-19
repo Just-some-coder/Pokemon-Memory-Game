@@ -18,6 +18,11 @@
     animation: pulsate 1.5s infinite;
 }
 
+.Header img:hover{
+    animation: paused;
+    cursor: pointer;
+}
+
 .gameArea{
     margin-top: 5rem;
     position: fixed;
@@ -192,15 +197,18 @@
 table{
     margin-top: 10px;
     font-size: 1.3rem;
-    border: 2px solid black;
+    background: #aaa;
+    /*border: 2px solid black;*/
 }
 table tr{
     border: 2px black solid;
     /*background: #bbb;*/
     border-radius: 30px ;
+    width: 400px;
 }
 td{
     border: 2px black solid;
+    width: 200px;
 }
 .leaderboard-table table tr td{
     justify-content: center;
@@ -284,13 +292,31 @@ button:hover img{
     border-radius: 10px;
     border: 1px solid rgba( 255, 255, 255, 0.18 );
 
-    transition: 0.1s ease-in-out;
+    transition: 1s ease-in-out;
     cursor: pointer;
-}
-
-.cardFlipped{
 
 }
+
+.none{
+    display: none;
+}
+
+.card-front{
+    transition: transform 1s;
+    transform-style: preserve-3d;
+}
+
+.flipped {
+    transform: rotateY( 180deg );
+}
+
+.card-back {
+    transition: transform 0.5s;
+    transform: rotateY(180deg);
+}
+
+
+
 
 .card:hover{
     transform: scale(1.1);
@@ -308,12 +334,50 @@ button:hover img{
     justify-content: space-around;
     text-align: center;
 }
-
+.score{
+    text-align: center;
+}
 .score h3{
     top:100px;
     right:120px;
     position: fixed;
-    font-size: 3rem;
+    font-size: 2.5rem;
+}
+.score img{
+    width: 40px;
+
+}
+
+.gameWin{
+    top:150px;
+    left:540px;
+    text-align: center;
+    position: fixed;
+    height: 550px;
+    width: 800px;
+    border-radius: 40px;
+    background: rgba(255,255,255,0.8);
+}
+
+.gameWin img{
+    width: 380px;
+    height: 400px;
+}
+
+.gameLose{
+    top:150px;
+    left:540px;
+    text-align: center;
+    position: fixed;
+    height: 550px;
+    width: 800px;
+    border-radius: 40px;
+    background: rgba(255,255,255,0.8);
+}
+
+.gameLose img{
+    width: 550px;
+    height: 400px;
 }
 
 @keyframes spin {
