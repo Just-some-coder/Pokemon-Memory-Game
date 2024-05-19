@@ -5,7 +5,7 @@ import {useDebugValue, useEffect, useState} from "react";
 function GameButton({handlePlay, handleClickSound}){
     return (
         <div className={"gameArea"} onClick={handlePlay}>
-            <img src="../assets/playButton.png" onClick={handleClickSound}/>
+            <img src="./assets/playButton.png" onClick={handleClickSound}/>
         </div>
     );
 }
